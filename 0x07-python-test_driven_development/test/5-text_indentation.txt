@@ -1,0 +1,105 @@
+# run test with python3 -m doctest -v ./tests/5-text_indentation.txt
+
+First import method to test
+>>> text_indentation = __import__('5-text_indentation').text_indentation
+
+SUCCESS CASES:
+
+Test string:
+     >>> text_indentation("""Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
+     ... Quonam modo? Utrum igitur tibi litteram videor an totas paginas commovere? \
+     ... Non autem hoc: igitur ne illud quidem. Fortasse id optimum, sed ubi illud""")
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+     <BLANKLINE>
+     Quonam modo?
+     <BLANKLINE>
+     Utrum igitur tibi litteram videor an totas paginas commovere?
+     <BLANKLINE>
+     Non autem hoc:
+     <BLANKLINE>
+     igitur ne illud quidem.
+     <BLANKLINE>
+     Fortasse id optimum, sed ubi illud
+
+Test string with extra spaces (shouldn't print spaces at beginning or end of lines):
+     >>> text_indentation("   A B.     C D?      E F:     G H     ")
+     A B.
+     <BLANKLINE>
+     C D?
+     <BLANKLINE>
+     E F:
+     <BLANKLINE>
+     G H
+
+     >>> text_indentation("   Hey     \n     .     ")
+     Hey
+     .
+     <BLANKLINE>
+
+     >>> text_indentation("      Hello      ")
+     Hello
+
+     >>> text_indentation("    ")
+
+Additional Test Cases:
+
+# Test string with multiple paragraphs
+>>> text_indentation("""Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+Praesent feugiat orci at velit rhoncus, eget faucibus libero cursus. Phasellus tincidunt tortor sed nisl dignissim ultrices. 
+
+In at diam accumsan, interdum mauris sed, euismod neque. Integer sit amet libero vel nulla vehicula facilisis.
+
+Sed faucibus odio ut ex sagittis, eget aliquam metus eleifend. Donec mattis mauris nec lorem malesuada, a efficitur dui scelerisque.
+
+Proin ut odio a lectus lacinia varius id nec eros. Nullam aliquam purus a nisl tristique, vel tincidunt mi malesuada.
+
+Nam id mi fermentum, egestas metus sed, pulvinar velit. Nullam fermentum libero eget sapien finibus vestibulum.
+
+Vestibulum eget nunc fringilla, accumsan mi in, cursus lectus. Nam accumsan est id enim fermentum hendrerit.
+
+""")
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+Praesent feugiat orci at velit rhoncus, eget faucibus libero cursus. Phasellus tincidunt tortor sed nisl dignissim ultrices.
+
+In at diam accumsan, interdum mauris sed, euismod neque. Integer sit amet libero vel nulla vehicula facilisis.
+
+Sed faucibus odio ut ex sagittis, eget aliquam metus eleifend. Donec mattis mauris nec lorem malesuada, a efficitur dui scelerisque.
+
+Proin ut odio a lectus lacinia varius id nec eros. Nullam aliquam purus a nisl tristique, vel tincidunt mi malesuada.
+
+Nam id mi fermentum, egestas metus sed, pulvinar velit. Nullam fermentum libero eget sapien finibus vestibulum.
+
+Vestibulum eget nunc fringilla, accumsan mi in, cursus lectus. Nam accumsan est id enim fermentum hendrerit.
+
+FAIL CASES:
+
+Test other data types:
+     >>> text_indentation(-1)
+     Traceback (most recent call last):
+     ...
+     TypeError: text must be a string
+
+     >>> text_indentation(123)
+     Traceback (most recent call last):
+     ...
+     TypeError: text must be a string
+
+     >>> text_indentation(['Lorem', 'ipsum'])
+     Traceback (most recent call last):
+     ...
+     TypeError: text must be a string
+
+Test extra args:
+     >>> text_indentation("Hello", "World")
+     Traceback (most recent call last):
+     ...
+     TypeError: text_indentation() takes 1 positional argument but 2 were given
+
+Test too few args
+     >>> text_indentation()
+     Traceback (most recent call last):
+     ...
+     TypeError: text_indentation() missing 1 required positional argument: 'text'
